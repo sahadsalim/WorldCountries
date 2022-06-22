@@ -6,7 +6,7 @@ import Header from "./Header";
 const Favorites=(props)=>{
     const [fav,setFav]=useState([]);
     useEffect(() => {
-        setFav(props.countries.filter((m)=>m.isFavorite==true));
+        setFav(props.countries.filter((m)=>m.isFavorite===true));
     }, [props.countries])
     
     return(

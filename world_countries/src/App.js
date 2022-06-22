@@ -2,8 +2,7 @@ import React, { Suspense, lazy, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCountry } from "./redux/actions";
@@ -21,7 +20,7 @@ const App = (data) => {
     let mounted = true;
     getCountryList().then((items) => {
       if (mounted) {
-        let data = dispatch(setCountry(items.countries));
+        const data = dispatch(setCountry(items.countries));
       }
     });
     return () => (mounted = false);

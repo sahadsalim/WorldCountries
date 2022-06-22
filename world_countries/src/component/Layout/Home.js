@@ -9,7 +9,7 @@ const Home = (props) => {
   let isOpen = true;
   let [continent, setContinent] = useState([]);
   let [filteredList, setFilteredList] = useState([]);
-
+  let [selected,setSelected] =useState('');
   useEffect(() => {
     if (props.countries.length>0) {
       setFilteredList(props.countries);
@@ -24,13 +24,13 @@ const Home = (props) => {
  }
   , [props.countries]);
   const onContinentSelect = (evt) => {
+    setSelected(evt);
     let filteredList1 = props.countries.filter((m) => m.continent === evt);
     setFilteredList(filteredList1);
   };
 
   return (
     <Fragment>
-      {/* <Link  to="/fav"> Fav</Link> */}
       <Header />
       {auth.isLogged ? (
         <div className="flex">
@@ -45,6 +45,7 @@ const Home = (props) => {
                 <ContinentList
                   onContinentSelect={onContinentSelect}
                   continent={continent}
+                  selected={selected}
                 />
               ) : null}
             </nav>

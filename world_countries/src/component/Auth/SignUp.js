@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getCountryList, signup } from "../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import store from "../../redux/store";
 const SignUp = () => {
   const dispatch = useDispatch();
-  // const country = useSelector((state) => state.country);
 
   const pattern = /^[a-zA-Z0-9]{15,}$/;
   const pattern1 = /^[a-zA-Z0-9]{1,}$/;
