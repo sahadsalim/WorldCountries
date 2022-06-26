@@ -21,7 +21,7 @@ const Profile = () => {
   const setValue=(name)=>{
     let user = localStorage.getItem("users");
     const userList = JSON.parse(user) || [];
-    const selectedUser = userList.find((m)=>m.email===name);
+    const selectedUser = userList.find((user)=>user.email===name);
     setData(selectedUser);
   }
   const displayNameChange = (event) => {

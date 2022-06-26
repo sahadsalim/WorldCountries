@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import NewPagination from "../Layout/NewPagination";
-import ListItem from "./ListItem";
+import NewPagination from "../layout/new-pagination";
+import ListItem from "./list-item";
 let PageSize = 5;
 const List = (props) => {
   useEffect(() => {
     setCountries(props.countries);
+    setPage(1);
   }, [props.countries]);
   const [countries, setCountries] = useState(props.countries);
   const [page,setPage]=useState(1);

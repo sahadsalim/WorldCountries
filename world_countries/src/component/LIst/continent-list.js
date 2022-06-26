@@ -15,7 +15,7 @@ const ContinentList = (props) => {
   });
   return (
     <Fragment>
-      <h1 className="text-lg">Continents {props.selected}</h1>
+      <h1 className="text-lg">Continents {props.selected?props.selected:'All'}</h1>
       {continentList}
     </Fragment>
   );

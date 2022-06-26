@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 const authReducer = (state = { isLogged: false }, action) => {
   if (action.payload) {
     let user = localStorage.getItem("users");
-    const userList = JSON.parse(user) || [];
+    const userList = JSON.parse(user)?JSON.parse(user): [];
     const validUser = userList?.find(
       (m) =>
         m.email === action.payload.userName &&
@@ -14,26 +14,31 @@ const authReducer = (state = { isLogged: false }, action) => {
     switch (action.type) {
       case "LOGIN":
         if (validUser) {
-          state = { ...state, isLogged: true,...validUser };
+          state = { ...state, isLogged: true, ...validUser };
         }
         break;
       case "SIGN_OUT":
-        state={isLogged:false};
-        localStorage.setItem('logged',false);
+        state = { isLogged: false };
+        localStorage.setItem("logged", false);
         break;
       case "SIGN_UP":
-        let list =[];
-        if (!existingUser) {
-          list =[action.payload];
+        let list = [];
+        if (!existingUser && !userList) {
+          list = [action.payload];
+        } else if(!existingUser && userList.length>0){
+          list = [...userList,action.payload];
         }else{
-          list=userList.push(action.payload);
+          list.filter((listItem)=>userData.email!==action.payload.email);
+          list = [...list,action.payload];
         }
         let userData = JSON.stringify(list);
         localStorage.setItem("users", userData);
         break;
       case "UPDATE_DATA":
         if (existingUser) {
-          let otherUsersList=userList.filter((m)=>m.email!==action.payload.email);
+          let otherUsersList = userList.filter(
+            (m) => m.email !== action.payload.email
+          );
           otherUsersList.push(action.payload);
           let userData = JSON.stringify(otherUsersList);
           localStorage.setItem("users", userData);
@@ -41,12 +46,14 @@ const authReducer = (state = { isLogged: false }, action) => {
         break;
       case "DELETE_USER":
         if (existingUser) {
-          let otherUsersList=userList.filter((m)=>m.email!==action.payload.email);
+          let otherUsersList = userList.filter(
+            (m) => m.email !== action.payload.email
+          );
           let userData = JSON.stringify(otherUsersList);
           localStorage.setItem("users", userData);
         }
-        state={isLogged:false};
-        localStorage.setItem('logged',false);
+        state = { isLogged: false };
+        localStorage.setItem("logged", false);
         break;
       default:
         break;

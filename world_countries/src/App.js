@@ -7,11 +7,11 @@ import {
 import { useDispatch } from "react-redux";
 import { setCountry } from "./redux/actions";
 import store from "./redux/store";
-import Profile from "./component/Auth/Profile";
-const Home = lazy(() => import("./component/Layout/Home"));
-const Login = lazy(() => import("./component/Auth/Login"));
-const SignUp = lazy(() => import("./component/Auth/SignUp"));
-const Favorites =lazy(() =>import("./component/Layout/Favorites"));
+import Profile from "./component/auth/profile";
+const Home = lazy(() => import("./component/layout/home"));
+const Login = lazy(() => import("./component/auth/login"));
+const SignUp = lazy(() => import("./component/auth/signup"));
+const Favorites =lazy(() =>import("./component/layout/favorites"));
 const App = (data) => {
   let [countries,setCountries]=useState([]);
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ const App = (data) => {
           </Routes>
         </Router>
       </Suspense>
+      <div id="portal"></div>
     </div>
   );
 };

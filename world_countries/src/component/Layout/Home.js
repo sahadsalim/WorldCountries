@@ -1,8 +1,9 @@
 import {  useSelector } from "react-redux";
 import { Fragment, useEffect, useState } from "react";
-import List from "../LIst/List";
-import ContinentList from "../LIst/ContinentList";
-import Header from "./Header";
+import List from "../list/list";
+import ContinentList from "../list/continent-list";
+// import {  } from "../";
+import Header from "./header";
 
 const Home = (props) => {
   const auth = useSelector((state) => state.auth);
@@ -28,7 +29,6 @@ const Home = (props) => {
     let filteredList1 = props.countries.filter((m) => m.continent === evt);
     setFilteredList(filteredList1);
   };
-
   return (
     <Fragment>
       <Header />

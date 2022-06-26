@@ -4,18 +4,28 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
   useEffect(() => {
     setPagination();
   }, [totalItems, numberOfItem, page]);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(0);
   const [pages, setPages] = useState([]);
   const [buttons1, setButtons1] = useState({ prev: true, next: true });
+  let itemsCount=Math.ceil(totalItems / numberOfItem);
   const setPagination = () => {
-    setItems(Math.ceil(totalItems / numberOfItem));
+    setItems(itemsCount);
     let pages1 = [];
     if (page<4) {
-      for (let index = 1; index <= 3; index++) {
-        pages1.push({ text: index+"", val: index, disabled: false });
+      if (itemsCount>4) {
+        for (let index = 1; index <= 3; index++) {
+          pages1.push({ text: index+"", val: index, disabled: false });
+        }
+        pages1.push({ text: "...", val: "", disabled: true });
+        pages1.push({ text: itemsCount+"", val: itemsCount, disabled: false });
+      }else{
+        for (let index = 1; index <= 3; index++) {
+          if (index<=itemsCount) {
+            pages1.push({ text: index+"", val: index, disabled: page<index?true:false });            
+          }
+        }
       }
-      pages1.push({ text: "...", val: "", disabled: true });
-      pages1.push({ text: items+"", val: items, disabled: false });
+
     }else{
       if ((items-page)>3) {
         pages1.push({ text: '1', val: 1, disabled: false });
@@ -29,7 +39,7 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
         pages1.push({ text: '1', val: 1, disabled: false });
         pages1.push({ text: "...", val: "", disabled: true });
         for (let index = 0; index < 3; index++) {
-          pages1.push({ text: (items-(2-index))+"", val: (items-(3-index)), disabled: false });
+          pages1.push({ text: (itemsCount-(2-index))+"", val: (itemsCount-(2-index)), disabled: false });
         }
       }
     }
@@ -43,7 +53,7 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
       } else {
         setButtons1({ prev: true, next: false });
       }
-    } else if (page === totalItems) {
+    } else if (page === itemsCount) {
       setButtons1({ prev: false, next: true });
     } else {
       setButtons1({ prev: false, next: false });
@@ -54,6 +64,7 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
   }
   return (
     <>
+    <span>page:{page} and item:{items}</span>
     <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
       <div>
         <p className="text-sm">
@@ -93,13 +104,13 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
               />
             </svg>
           </button>
-          {pages.map((m,index) => (
-            <button key={index} disabled={m.disabled}
-                onClick={()=>onPagination(m.val)}
+          {pages.map((pageVal,index) => (
+            <button key={index} disabled={pageVal.disabled}
+                onClick={()=>onPagination(pageVal.val)}
               aria-current="page"
-              className={"z-10  border-indigo-500  relative inline-flex items-center px-4 py-2 border text-sm font-medium "+(page===m.val? 'bg-indigo-600 text-white':'bg-indigo-50 text-indigo-600')}
+              className={"z-10  border-indigo-500  relative inline-flex items-center px-4 py-2 border text-sm font-medium "+(page===pageVal.val? 'bg-indigo-600 text-white':'bg-indigo-50 text-indigo-600')}
             >
-              {m.text}
+              {pageVal.text}
             </button>
           ))}
 

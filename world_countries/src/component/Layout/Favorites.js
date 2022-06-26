@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import List from "../LIst/List"
-import Header from "./Header";
+import List from "../list/list";
+import Header from "./header";
 
 const Favorites=(props)=>{
     const [fav,setFav]=useState([]);
     useEffect(() => {
-        setFav(props.countries.filter((m)=>m.isFavorite===true));
+        setFav(props.countries.filter((country)=>country.isFavorite===true));
     }, [props.countries])
     
     return(
