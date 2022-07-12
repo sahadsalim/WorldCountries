@@ -21,7 +21,7 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
       }else{
         for (let index = 1; index <= 3; index++) {
           if (index<=itemsCount) {
-            pages1.push({ text: index+"", val: index, disabled: page<index?true:false });            
+            pages1.push({ text: index+"", val: index, disabled: page===index?true:false });            
           }
         }
       }
