@@ -64,7 +64,7 @@ const NewPagination = ({ totalItems, numberOfItem, onPagination, page }) => {
   }
   return (
     <>
-    <span>page:{page} and item:{items}</span>
+    <span>page:{page} of {items} items</span>
     <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-center">
       <div>
         <p className="text-sm">

@@ -13,7 +13,7 @@ const Favorites=(props)=>{
         <Fragment>
       <Header />
       <button className="text-lg m-2 p-2 rounded-md bg-gray-900"><Link to="../home">⬅️ Back </Link></button>
-        {fav.length>0?<List title="Favorite" countries={fav} />:null}
+        {fav.length>0?<List title="Favorite" countries={fav} />:<div className="text-center">No favorites available. </div>}
         </Fragment>
     )
 }

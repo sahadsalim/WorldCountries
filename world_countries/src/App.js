@@ -5,15 +5,17 @@ import {
   Route
 } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCountry } from "./redux/actions";
+import { login, setCountry } from "./redux/actions";
 import store from "./redux/store";
 import Profile from "./component/auth/profile";
+import Protected from "./config/protected-routes";
 const Home = lazy(() => import("./component/layout/home"));
 const Login = lazy(() => import("./component/auth/login"));
 const SignUp = lazy(() => import("./component/auth/signup"));
 const Favorites =lazy(() =>import("./component/layout/favorites"));
 const App = (data) => {
   let [countries,setCountries]=useState([]);
+  let [loged,isLogged]=useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +29,7 @@ const App = (data) => {
   },[]);
   store.subscribe(()=>{
     setCountries(store.getState().country)
+    isLogged(store.getState().auth.isLogged)
   })
 
   return (
@@ -34,12 +37,25 @@ const App = (data) => {
       <Suspense fallback={<div>Loading...</div>}>
         <Router>
           <Routes>
-            <Route path="/" element={<Home countries={countries} />} />
-            <Route path="/home" element={<Home countries={countries} />} />
+            <Route path="/" element={<Login />} />
+            <Route path="*" element={<Login />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/SignUp" element={<SignUp />} />
-            <Route path="/fav" element={<Favorites countries={countries} />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/home" element={
+              <Protected isLoggedIn={loged} >{
+                <Home countries={countries} />}
+              </Protected>
+            }/>
+            <Route path="/fav" element={
+              <Protected isLoggedIn={loged} >{
+                <Favorites countries={countries} />}
+              </Protected>
+            }/>
+            <Route path="/profile" element={
+              <Protected isLoggedIn={loged} >{
+                <Profile />}
+              </Protected>
+            }/>
           </Routes>
         </Router>
       </Suspense>
